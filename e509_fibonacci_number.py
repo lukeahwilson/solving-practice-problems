@@ -24,5 +24,22 @@ class Solution:
         # if n <= 1: return n
         # return Solution.fib(self, n-1) + Solution.fib(self, n-2)
 
-        # Math Cheat
+        # Golden Ratio Formula
         # return int((((1 + 5 ** 0.5) / 2) ** n + 1) / 5 ** 0.5)
+
+# Unlike dynamic programming, recursive tree repeats all early computations
+# fib(5) = 5
+# fib(4) = 3
+# fib(3) = 2
+# fib(2) = 1
+# fib(1) = 1
+# fib(0) = 0
+#                          fib(5)
+#                      /             \
+#                fib(4)                fib(3)
+#              /      \                /     \
+#          fib(3)      fib(2)         fib(2)    fib(1)
+#         /     \        /    \       /    \
+#   fib(2)   fib(1)  fib(1) fib(0) fib(1) fib(0)
+#   /    \
+# fib(1) fib(0)
