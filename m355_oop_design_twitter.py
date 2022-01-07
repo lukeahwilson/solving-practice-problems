@@ -44,42 +44,33 @@ class Twitter:
     	a. Add the most recent 10 posts from the sorted Ids of all followed users to a news_feed
     	b. Return the newsfeed
 
-    4. controlFollowers:
-        a. follow: If not already following, add to list
-        b. unfollow: If following, remove from list
+    4. controlFollowers: follow/unfollow functions add and discard from followers set
     '''
     def __init__(self):
-        self.post_nums = defaultdict(list)
-        self.post_hist = defaultdict(list)
-        self.followers = defaultdict(list)
         self.postId = 0
-
+        self.post_Ids = defaultdict(list)
+        self.post_hist = defaultdict(list)
+        self.followers = defaultdict(set)
 
     def postTweet(self, userId: int, tweetId: int) -> None:
-        self.post_nums[userId] += [self.postId]
+        self.post_Ids[userId] += [self.postId]
         self.post_hist[self.postId] = tweetId
         self.postId += 1
 
-
     def getNewsFeed(self, userId: int) -> List[int]:
-        ids = []
+        Ids = []
         news_feed = []
 
-        for user in self.followers[userId] + [userId]:
-            for i in self.post_nums[user][-1:-11:-1]:
-                ids += [i]
-
-        for i in sorted(ids)[-1:-11:-1]:
+        for user in list(self.followers[userId]) + [userId]:
+            for i in self.post_Ids[user][-1:-11:-1]:
+                Ids += [i]
+        for i in sorted(Ids)[-1:-11:-1]:
             news_feed += [self.post_hist[i]]
 
         return news_feed
 
-
     def follow(self, followerId: int, followeeId: int) -> None:
-        if followeeId not in self.followers[followerId]:
-            self.followers[followerId] += [followeeId]
-
+        self.followers[followerId].add(followeeId)
 
     def unfollow(self, followerId: int, followeeId: int) -> None:
-        if followeeId in self.followers[followerId]:
-            self.followers[followerId].remove(followeeId)
+        self.followers[followerId].discard(followeeId)
