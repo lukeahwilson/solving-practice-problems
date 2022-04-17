@@ -81,3 +81,29 @@ def traverse(root):
 traverse(root)
 return traversal
 # 2. Iterative Approach: very painful to resolve stack order not worth it
+
+
+
+# BFS Problem Example, Checking for Symmetrical Trees
+# Start by confirming that there are two leafs from start, else return appropriately
+# Create a deque, it could be a stack too, each pair is okay on it's own, can pop left or right
+# Check if the left and right mirror out for each pair, append a new pair if possible
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        if not (root.left and root.right):
+            if (root.left or root.right): return False
+            return True
+        queue = collections.deque([[root.left, root.right]])
+
+        while queue:
+            left, right = queue.popleft()
+            if left.val != right.val: return False
+            if left.left or right.right:
+                if left.left and right.right:
+                    queue.append([left.left,right.right])
+                else: return False
+            if left.right or right.left:
+                if left.right and right.left:
+                    queue.append([right.left,left.right])
+                else: return False
+        return True
