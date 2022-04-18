@@ -159,3 +159,37 @@ class Solution:
             node = node.next
         node.next = node.next.next
         return head
+
+
+# Merging K Lists
+# This is a more complex version of merging 2 sorted lists
+# The expensive way (below) is to iterate through and select the next node one at a time
+# The time complexity is O(kn) where K is number of lists and n is total list length
+# A more effective way to do this, is similar to merge sort, or divide and conquer
+# Here we would merge lists in groupings of 2, allowing us to reduce one dimension (k) by log
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        sorted_list = sorter = ListNode()
+
+        nodes = dict()
+
+        for index in range(len(lists)):
+            if lists[index]:
+                nodes[index] = lists[index]
+
+        while nodes:
+            min_value = float("inf")
+            for index, node in nodes.items():
+                if node.val < min_value:
+                    min_value = node.val
+                    min_index = index
+
+            sorter.next = nodes[min_index]
+            sorter = sorter.next
+
+            if nodes[min_index].next:
+                nodes[min_index] = nodes[min_index].next
+            else:
+                nodes.pop(min_index)
+
+        return sorted_list.next
