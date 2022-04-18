@@ -11,6 +11,27 @@
 #       s consists of parentheses only '()[]{}'.
 ##
 
+# Using a stack
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        brackets = {'[':']', '(':')', '{':'}'}
+
+        for char in s:
+            if char in brackets.keys():
+                stack.append(char)
+            elif not stack:
+                return False
+            else:
+                compliment = stack.pop()
+                if brackets[compliment] != char:
+                    print('hi')
+                    return False
+        if stack:
+            return False
+        return True
+
+# Using custom logic
 class Solution:
     def isValid(self, s: str) -> bool:
         square = 0
