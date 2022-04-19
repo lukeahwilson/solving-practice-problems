@@ -12,6 +12,7 @@ Binary Search: This is possible on sorted lists!
 - Repeat this process until the target is found, or the search completes and there is no target
 - There is no target if the left and right pointers cross eachother
 '''
+
 class Solution:
     def binarysearch(self, nums: List[int], target: int) -> int:
         left = 0
