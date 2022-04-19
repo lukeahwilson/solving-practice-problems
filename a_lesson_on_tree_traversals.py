@@ -84,6 +84,15 @@ return traversal
 
 
 
+# DFS Example: Return Max Height of Tree
+def height(root):
+    def dfs(head):
+        if not head: return 0
+        return max(dfs(head.left), dfs(head.right)) + 1
+    return dfs(root) - 1
+
+
+
 # BFS Problem Example, Checking for Symmetrical Trees
 # Start by confirming that there are two leafs from start, else return appropriately
 # Create a deque, it could be a stack too, each pair is okay on it's own, can pop left or right
@@ -107,3 +116,40 @@ class Solution:
                     queue.append([right.left,left.right])
                 else: return False
         return True
+
+
+# BFS Problem Example, Level Order Traversal
+class Solution:
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        levels = []
+        if not root:
+            return levels
+
+        level = 0
+        queue = deque([root,])
+        while queue:
+            # start the current level
+            levels.append([])
+            # number of elements in the current level
+            level_length = len(queue)
+
+            for i in range(level_length):
+                node = queue.popleft()
+                # fulfill the current level
+                levels[level].append(node.val)
+
+                # add child nodes of the current level
+                # in the queue for the next level
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+            # go to next level
+            level += 1
+
+        return levels
