@@ -15,5 +15,5 @@ class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         for index in reversed(range(len(nums))):
             if val == nums[index]:
-                nums[index], nums[-1] = nums[-1], nums[index]
+                nums[index] = nums[-1]
                 nums.pop()
